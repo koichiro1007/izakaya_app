@@ -1,0 +1,40 @@
+<div class="zaiko-table">
+    <table class="table table-striped index-table">
+      <tr>
+        <th>店名</th>
+        <th>エリア</th>
+        <th>ジャンル</th>
+        <th>URL</th>
+        <th>備考</th>
+        <th>投稿者</th>
+        <% if user_signed_in? %>
+          <%if current_user.posts.exists? %> 
+            <th></th>
+            <th></th>
+          <%end%>
+        <%else%>
+        <%end%>
+      </tr>
+      <% @post.each do |post| %>
+      <tr>
+        <td><%= post.restaurant_name %></td>
+        <td><%= post.area %></td>
+        <td><%= post.genre %></td>
+        <td><%= post.url %></td>
+        <td><%= post.notes %></td>
+        <td><%= post.user.name %></td>
+        <% if user_signed_in?%>
+          <% if user_signed_in? && current_user.id == post.user_id%>
+            <td><%= link_to '編集する', edit_post_path(post.id) %></td>
+            <td><%= link_to '削除する', post_path(post.id), method: :delete, data: {confirm: "一度削除したら復元出来ません。本当に削除しますか？"} %></td>
+          <%else%>
+            <%if current_user.posts.exists? %>
+              <td></td>
+              <td></td>
+            <%end%>
+          <%end%>
+        <%end%>
+      </tr>
+      <% end %>
+    </table>
+</div>

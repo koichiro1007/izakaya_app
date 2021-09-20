@@ -1,0 +1,21 @@
+<div>
+  <%if current_user.id == @user.id %>
+    <p>ユーザーID：</p>
+    <p><%= @user.user_name %></p>
+  <%end%>
+  <br>
+  <p>お名前：</p>
+  <p><%= @user.name %></p>
+  <br>
+  <p>自己紹介：</p>
+  <p><%= @user.introduction %></p>
+  <br>
+</div>
+<br>
+<div>
+  <%if current_user.id == @user.id %>
+    <%= link_to "編集する", edit_user_registration_path(@user.id)%>
+  <%end%>
+</div>
+
+

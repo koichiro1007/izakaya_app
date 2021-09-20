@@ -1,0 +1,75 @@
+header{
+  height: 80px;
+  width: 100%;
+  .logo{
+    font-size: 50px;
+    margin: 0 auto;
+    text-align: center;
+    width: 70%;
+    height: 80px;
+  }
+}
+
+
+.mini-navbar{
+  &__center{
+    width: 70%;
+    margin: 0 auto;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    &__left{
+    }
+    &__right{
+      .username{
+        text-decoration: none;
+        color: #8b0000;
+        font-size: 16px;
+      }
+      .username:hover{
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+
+.navbar{
+  background-color:	#ffdab9;
+  &__center{
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    &__left{
+    }
+    &__right{
+    }
+  }
+}
+
+
+main{
+  .content{
+    padding: 50px 0px;
+    width: 70%;
+    margin: 0 auto;
+  }
+}
+
+
+
+
+footer{
+  background-color: #ffdab9;
+  width: 100%;
+  .footer-center{
+    width: 70%;
+    margin: 0 auto;
+    height: 200px;
+    .copyright{
+      padding: 30px 0;
+      color: #ffffff;
+    }
+  }
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>20時以降空いてるお店</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        20時以降空いてるお店
+      </div>
+    </header>
+
+    <div class="mini-navbar">
+      <div class="mini-navbar__center">
+        <div class="mini-navbar__center__left">
+        </div>
+        <div class="mini-navbar__center__right">
+          <% if user_signed_in? %>
+          <p>
+            <% if current_user.name.present? %>
+              <%= link_to current_user.name, user_path(current_user.id), class: "username" %>としてログイン中
+            <%else%>
+              <%= link_to current_user.user_name, user_path(current_user.id), class: "username"%>としてログイン中
+            <%end%>
+          </p>
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <div class="navbar">
+      <div class="navbar__center">
+        <div class="navbar__center__left">
+          <% if user_signed_in? %>
+            <%= link_to "新規投稿", new_post_path, class: "btn btn-light" %>
+          <% else %>
+            <%= link_to "新規登録", new_user_registration_path, class: "btn btn-light"%>
+          <% end %>
+        </div>  
+        <% if user_signed_in? %>
+          <div class="navbar__center__right">
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-light"%>
+          </div>
+          <%else%>
+            <%= link_to "ログイン", new_user_session_path, class: "btn btn-light"%>
+          <%end%>
+          </div>
+        </div>
+
+    
+  <main>
+    <div class="content">
+
+      <%= yield %>
+    
+    </div>
+  </main>
+    <footer>
+      <div class="footer-center">
+        <p class="copyright">© 2021 Koichiro Ueta</p>
+      </div>
+    </footer>
+  </body>
+</html>
+

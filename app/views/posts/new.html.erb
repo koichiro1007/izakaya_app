@@ -1,0 +1,55 @@
+  <%= form_with model: @post, local: true do |form|%>
+
+    <div class="restaurant_name-label">
+      <p class="restaurant-label__label">店名</p>
+      <p class="restaurant_name-label__notes">※必ず入力して下さい</p>
+    </div>
+    <div class="restaurant_name-form">
+      <%= form.text_field :restaurant_name, class: "form-control" %><br>
+    </div>
+
+    <div class="genre-label">
+      <p class="genre-label__label">ジャンル</p>
+      <p class="genre-label__notes">※必ず選択して下さい</p>
+    </div>
+    <div class="genre-form">
+      <%= form.text_field :genre, class: "form-control" %><br>
+    </div>
+
+    <div class="area-label">
+      <p class="area-label__label">エリア</p>
+      <p class="area-label__notes">※必ず選択して下さい</p>
+    </div>
+    <div class="area-form">
+      <%= form.select :area, {'博多': '博多', '中洲': '中洲', '中洲川端': '中洲川端','西中洲': '西中洲','天神': '天神','春吉': '春吉','大名': '大名','今泉': '今泉','警固': '警固','薬院': '薬院','平尾': '平尾','高砂': '高砂','その他': 'その他'}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %><br>
+    </div>
+
+
+
+    <div class="url-label">
+      <p class="url-label__label">お店のURL</p>
+      <p class="url-label__notes">※食べログやInstagramなどお店の情報がわかるサイトがあれば入力して下さい</p>
+    </div>
+    <div class="url-form">
+      <%= form.text_field :url, class: "form-control" %><br>
+    </div>
+
+
+    <div class="notes-label">
+      <p class="notes-label__label">備考欄</p>
+    </div>
+    <div class="notes-form">
+      <%= form.text_area :notes, class: "form-control" %><br>
+    </div>
+
+
+    <div>
+      <%= form.submit '投稿する', class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+
+<div >
+  <%= link_to 'トップページへ戻る', root_path %>
+</div>
+

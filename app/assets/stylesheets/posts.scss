@@ -1,0 +1,75 @@
+
+
+// テーブルタグのCSS
+
+table, td, th{
+  margin: 0 auto;
+  border: 1px solid;
+  padding: 7px;
+}
+
+.zaiko-table{
+  white-space: nowrap; // 改行させない
+  overflow-x: scroll;
+}
+
+
+
+// new editアクションのCSS（医薬品投稿ページ）
+
+.product_name-label{
+  display: flex;
+  &__label{
+  }
+  &__notes{
+    color: #8b0000;
+    margin: 0 10px;
+  }
+}
+
+.number-label{
+  display: flex;
+  &__label{
+  }
+  &__notes{
+    color: #8b0000;
+    margin: 0 10px;
+  }
+}
+
+.number-form{
+  display: flex;
+  &__number{
+    width: 150px;
+  }
+  &__unit{
+    width: 80px;
+    margin: 0 10px;
+  }
+}
+
+.expiration-form{
+  display: flex;
+  &__year{
+    width: 150px;
+  }
+  &__month{
+    width: 80px;
+    margin: 0 10px;
+  }
+}
+
+.opening-form{
+  display: flex;
+  &__year{
+    width: 150px;
+  }
+  &__month{
+    width: 80px;
+    margin: 0 10px;
+  }
+}
+
+.notes-form__notes{
+  height: 300px;
+}
