@@ -14,16 +14,16 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = post.find(params[:id])
+    @post = Post.find(params[:id])
   end
 
   def edit
-    @post = post.find(params[:id])
+    @post = Post.find(params[:id])
   end
 
   def update
-    @post = post.find(params[:id]) 
-    post = post.find(params[:id])
+    @post = Post.find(params[:id]) 
+    post = Post.find(params[:id])
     post.update(post_params)
   end
 
