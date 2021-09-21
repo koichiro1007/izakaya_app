@@ -1,47 +1,55 @@
-# Railsアプリのルート
-rails_root = File.expand_path('../../', __FILE__)
+# rootパスのディレクトリを指定
+root_path = File.expand_path('../../', __FILE__)
 
-# Gemfileの場所
-ENV['BUNDLE_GEMFILE'] = rails_root + "/Gemfile"
+# アプリケーションサーバの性能を決定する
+worker_processes 2
 
-# Unicornの設定
-worker_processes  2
-timeout           15
-working_directory rails_root
-pid               File.expand_path 'tmp/pids/unicorn.pid', rails_root
-listen            File.expand_path 'tmp/sockets/.unicorn.sock', rails_root
-stdout_path       File.expand_path 'log/unicorn.log', rails_root
-stderr_path       File.expand_path 'log/unicorn.log', rails_root
-preload_app       true
+# アプリケーションの設置されているディレクトリを指定
+working_directory root_path
 
+# プロセスIDの保存先を指定
+pid "#{root_path}/tmp/pids/unicorn.pid"
 
-# フォークが行われる前の処理
+# ポート番号を指定
+listen "#{root_path}/tmp/sockets/unicorn.sock"
+
+# エラーのログを記録するファイルを指定
+stderr_path "#{root_path}/log/unicorn.stderr.log"
+
+# 通常のログを記録するファイルを指定
+stdout_path "#{root_path}/log/unicorn.stdout.log"
+
+#応答時間を待つ上限時間を設定
+timeout 30
+
+# ダウンタイムなしでUnicornを再起動時する
+preload_app true
+
+GC.respond_to?(:copy_on_write_friendly=) && GC.copy_on_write_friendly = true
+
+check_client_connection false
+
+run_once = true
+
 before_fork do |server, worker|
-  defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
+  defined?(ActiveRecord::Base) &&
+    ActiveRecord::Base.connection.disconnect!
+
+  if run_once
+    run_once = false # prevent from firing again
+  end
+
   old_pid = "#{server.config[:pid]}.oldbin"
-  if old_pid != server.pid
+  if File.exist?(old_pid) && server.pid != old_pid
     begin
-      Process.kill "QUIT", File.read(old_pid).to_i
-    rescue Errno::ENOENT, Errno::ESRCH
+      sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
+      Process.kill(sig, File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH => e
+      logger.error e
     end
   end
 end
 
-# フォークが行われた後の処理
-after_fork do |server, worker|
-  defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
-end
-
-
-
-
-# フォークが行われる前の処理
-before_fork do |server, worker|
-  old_pid = "#{server.config[:pid]}.oldbin"
-  if old_pid != server.pid
-    begin
-      Process.kill "QUIT", File.read(old_pid).to_i
-    rescue Errno::ENOENT, Errno::ESRCH
-    end
-  end
+after_fork do |_server, _worker|
+  defined?(ActiveRecord::Base) && ActiveRecord::Base.establish_connection
 end
